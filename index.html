@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sabor caseiro delivery </title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #fafafa;
+    }
+
+    header {
+      background: #00f81565;
+      color: white;
+      padding: 12px;
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 1.4rem;
+      margin: 0;
+    }
+
+    header button {
+      background: #03f70f;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* GRID RESPONSIVO */
+    #produtos {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      padding: 15px;
+    }
+
+    .produto {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      background: #fff;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+
+    .produto:hover {
+      transform: scale(1.02);
+    }
+
+    .produto img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .produto h3 {
+      margin: 8px 0 4px;
+      font-size: 1.2rem;
+    }
+
+    .produto p {
+      margin: 5px 0;
+      font-size: 0.95rem;
+    }
+
+    button {
+      margin-top: 8px;
+      padding: 12px;
+      cursor: pointer;
+      width: 100%;
+      background: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #218838;
+    }
+
+    /* ABA DE PRODUTOS E CARRINHO */
+    .aba {
+      display: none;
+    }
+    .ativa {
+      display: block;
+    }
+
+    /* Carrinho */
+    #carrinhoLista {
+      list-style: none;
+      padding: 15px;
+    }
+
+    #carrinhoLista li {
+      margin: 8px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+      background: #fff;
+      padding: 8px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .btn-remover {
+      background: #dc3545;
+      padding: 6px 10px;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    #total {
+      padding: 15px;
+      font-size: 1.1rem;
+    }
+
+    #finalizar {
+      display: block;
+      margin: 15px auto;
+      padding: 12px;
+      background: #00ff08;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #finalizar:hover {
+      background: #0056b3;
+    }
+
+    /* Melhorar no desktop */
+    @media (min-width: 400px) {
+      #produtos {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🍔 delivery </h1>
+    <button onclick="mostrarAba('carrinho')">🛒 Carrinho (<span id="qtd">0</span>)</button>
+  </header>
+
+  <!-- Aba de Produtos -->
+  <div id="aba-produtos" class="aba ativa">
+    <div id="produtos"></div>
+  </div>
+
+  <!-- Aba do Carrinho -->
+  <div id="aba-carrinho" class="aba">
+    <h2 style="text-align:center; margin: 15px 0;">🛒 Seu Carrinho</h2>
+    <ul id="carrinhoLista"></ul>
+    <p id="total"><strong>Total: R$ 0,00</strong></p>
+    <button id="finalizar" onclick="finalizarCompra()">Finalizar Compra</button>
+    <button style="background:#6c757d" onclick="mostrarAba('produtos')">⬅ Voltar ao Cardápio</button>
+  </div>
+
+  <script>
+    let carrinho = [];
+
+    async function carregarProdutos() {
+      const resposta = await fetch("cardapio.json");
+      const produtos = await resposta.json();
+
+      const container = document.getElementById("produtos");
+      produtos.forEach(produto => {
+        const div = document.createElement("div");
+        div.className = "produto";
+        div.innerHTML = `
+          <img src="${produto.url}" alt="${produto.nome}">
+          <h3>${produto.nome}</h3>
+          <p>${produto.descricao}</p>
+          <p><strong>R$ ${produto.preco.toFixed(2)}</strong></p>
+          <button onclick="adicionarCarrinho(${produto.id}, '${produto.nome}', ${produto.preco})">Comprar</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function adicionarCarrinho(id, nome, preco) {
+      carrinho.push({ id, nome, preco });
+      atualizarCarrinho();
+    }
+
+    function removerCarrinho(index) {
+      carrinho.splice(index, 1);
+      atualizarCarrinho();
+    }
+
+    function atualizarCarrinho() {
+      const lista = document.getElementById("carrinhoLista");
+      const total = document.getElementById("total");
+      const qtd = document.getElementById("qtd");
+
+      lista.innerHTML = "";
+      let soma = 0;
+
+      carrinho.forEach((item, index) => {
+        soma += item.preco;
+        const li = document.createElement("li");
+        li.innerHTML = `
+          ${item.nome} - R$ ${item.preco.toFixed(2)} 
+          <button class="btn-remover" onclick="removerCarrinho(${index})">Remover</button>`;
+        lista.appendChild(li);
+      });
+
+      total.innerHTML = `<strong>Total: R$ ${soma.toFixed(2)}</strong>`;
+      qtd.innerText = carrinho.length;
+    }
+
+    function finalizarCompra() {
+    if (carrinho.length === 0) {
+        alert("Seu carrinho está vazio!");
+        return;
+    }
+
+    let resumo = "🛒 *Meu pedido do Cardápio Delivery:*\n\n";
+    let soma = 0;
+
+    carrinho.forEach(item => {
+        resumo += `- ${item.nome} (R$ ${item.preco.toFixed(2)})\n`;
+        soma += item.preco;
+    });
+
+    resumo += `\n*Total: R$ ${soma.toFixed(2)}*`;
+
+    // Número do WhatsApp da lanchonete (inclua o DDD, sem + ou 00)
+    const numeroWhats = "558694983369"; // Ex: 55 + DDD + número
+
+    // Cria link com a mensagem
+    const link = `https://wa.me/${numeroWhats}?text=${encodeURIComponent(resumo)}`;
+
+    // Abre WhatsApp
+    window.open(link, "_blank");
+    }
+    function mostrarAba(aba) {
+      document.getElementById("aba-produtos").classList.remove("ativa");
+      document.getElementById("aba-carrinho").classList.remove("ativa");
+
+      if (aba === "produtos") {
+        document.getElementById("aba-produtos").classList.add("ativa");
+      } else {
+        document.getElementById("aba-carrinho").classList.add("ativa");
+      }
+    }
+
+    carregarProdutos();
+  </script>
+</body>
+</html>
