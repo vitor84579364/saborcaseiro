@@ -1,7 +1,7 @@
 {
   "comidas": [
     {
-      "disponivel": false,
+      "disponivel": true,
       "id": 1,
       "nome": "X-Burguer",
       "descricao": "Pão, hambúrguer, queijo e salada",
@@ -9,7 +9,7 @@
       "url": "https://viagem.cnnbrasil.com.br/wp-content/uploads/sites/5/2022/05/origem-do-hambuguer-cnn4.jpg"
     },
     {
-      "disponivel": false,
+      "disponivel": true,
       "id": 2,
       "nome": "Hot Dog",
       "descricao": "salcicha, pão, molho e batata palha",
@@ -17,7 +17,7 @@
       "url": "https://instadelivery-public.nyc3.cdn.digitaloceanspaces.com/itens/164955274162522d65643b1_75_75.jpeg"
     },
     {
-      "disponivel": false,
+      "disponivel": true,
       "id": 3,
       "nome": "Batata Frita",
       "descricao": "Porção média de batata frita crocante,acompanha copo de ketchup",
