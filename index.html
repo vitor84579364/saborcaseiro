@@ -8,6 +8,7 @@
   <img rel="icon" href="logo.png">
   <title>Sabor-caseiro</title>
 <style>
+  
   /* Título da aba */
   #titulo-aba {
     font-family: 'Playfair Display', serif;
@@ -23,7 +24,7 @@
     background-image:linear-gradient(rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0.5)), url("https://img.freepik.com/fotos-gratis/superficie-escura-com-espaco-em-branco-e-fast-food-menu_23-2147684608.jpg");
     font-family: Arial, sans-serif; 
     margin: 0; 
-    background: #fafafa; 
+    background: #060606f0; 
   }
 
   /* Header */
@@ -72,15 +73,15 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 5px;
-    background: #fff;
+    background: #1e1d1d;
     text-align: center;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     transition: transform .2s;
   }
   .produto:hover { transform: scale(1.02); }
   .produto img { width: 50%; height: 100px; object-fit: cover; border-radius: 8px; margin: 0 auto 5px auto; }
-  .produto h3 { margin: 8px 0 4px; font-size: 1.2rem; }
-  .produto p { margin: 5px 0; font-size: .95rem; }
+  .produto h3 { margin: 8px 0 4px; font-size: 1.2rem; color: white; }
+  .produto p { margin: 5px 0; font-size: .95rem; color: white;}
   button {
     text-shadow: #333 5px 5px 8px; 
     margin-top: 8px; 
@@ -99,15 +100,31 @@
   
 
   .btn-carrinho {
-    padding: 4px 2px;
-    font-size: 1.2rem;
-    background: transparent;
-    border: none;
-    color: #000000;
+    
+    position: fixed;       /* fixa na tela */
+    bottom: 20px;          /* distância da parte inferior */
+    left: 10px;           /* distância da lateral direita */
+    width: 80px;           /* tamanho da bolha */
+    height: 80px;
+    border-radius: 50%;    /* deixa redondo */
+    background: rgba(80, 242, 5, 0.409);   /* cor de fundo */
+    color: rgb(255, 255, 254);          /* cor do ícone/texto */
+    font-size: 1.1rem;     /* tamanho do ícone */
     font-weight: bold;
+    display: flex;         /* centraliza ícone */
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    border: 2px solid #ffffff;
     cursor: pointer;
+    z-index: 9999;         /* fica acima de tudo */
+    transition: transform 0.2s, background 0.3s;
   }
-  .btn-carrinho:hover { color: #f6ff00; }
+
+  .btn-carrinho:hover {
+    background: #fb0303;
+    transform: scale(1.05);
+  }
 
   .aba { display: none; }
   .ativa { display: block; }
@@ -125,7 +142,11 @@
     justify-content: center;
     gap: 10px;
   }
-
+  h3 {
+    color: white;
+    text-align: center;
+    margin-top: 10px;
+  }
   /* --- RESPONSIVO --- */
   @media (min-width:600px) {
     #produtos { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
@@ -149,6 +170,7 @@
     }
 
     .produto h3, .produto p {
+      color: white;
       margin: 0 5px;
       font-size: 0.85rem;
     }
@@ -337,7 +359,7 @@
           slides[current].classList.remove("active");
           current = (current + 1) % slides.length;
           slides[current].classList.add("active");
-        }, 3000);
+        }, 5000);
       }
 
       // carregar produtos (não bloqueia o slideshow)
