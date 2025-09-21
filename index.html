@@ -96,6 +96,7 @@
     transition: .2s; 
   }
   button:hover { background: #218838; }
+  
 
   .btn-carrinho {
     padding: 5px 8px;
@@ -238,7 +239,7 @@
             <h3>${comida.nome}</h3>
             <p>${comida.descricao}</p>
             <p style="font-weight:bold; color:${comida.disponivel ? 'rgb(49,128,0)' : 'red'};">
-              ${comida.disponivel ? 'Sim' : 'Não'}
+            ${comida.disponivel ? '✔️' : '❌'}
             </p>
             <p><strong>R$ ${comida.preco.toFixed(2)}</strong></p>
             ${botao}
@@ -261,7 +262,7 @@
             <h3>${bebida.nome}</h3>
             <p>${bebida.descricao}</p>
             <p style="font-weight:bold; color:${bebida.disponivel ? 'rgb(49,128,0)' : 'red'};">
-              ${bebida.disponivel ? 'Sim' : 'Não'}
+              ${bebida.disponivel ? '✔️' : '❌'}
             </p>
             <p><strong>R$ ${bebida.preco.toFixed(2)}</strong></p>
             ${botao}
