@@ -1,7 +1,7 @@
 {
   "comidas": [
     {
-      "disponivel": false,
+      "disponivel": true,
       "id": 1,
       "nome": "X-Burguer",
       "descricao": "Pão, hambúrguer, queijo e salada",
