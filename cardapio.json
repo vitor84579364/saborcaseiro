@@ -44,7 +44,7 @@
   ],
   "bebidas": [
     {
-      "disponivel": false,
+      "disponivel": true,
       "id": 1,
       "nome": "Coca-Cola Lata",
       "descricao": "Refrigerante Coca-Cola 350ml",
