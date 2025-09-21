@@ -1,178 +1,162 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sabor caseiro delivery </title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <img rel="icon" href="imgs\logo.png">
+  <title>Sabor-caseiro</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #fafafa;
-    }
-
+      #titulo-aba {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; /* você pode ajustar */
+    font-weight: 100; /* mais negrito */
+    color: #f2f2ec; /* ou qualquer cor elegante */
+    border: none;
+    text-shadow: #333 2px 2px 4px;
+  }
+    body { 
+      background-image:linear-gradient(rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0.5)), url("imgs/fundo.jpg");
+      font-family: Arial, sans-serif; margin: 0; background: #fafafa; }
     header {
-      background: #00f81565;
+      background-image:
+      linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url("imgs/fundo.jpg");
+      background-size: cover;       /* cobre toda a tela */
+      background-position: center;  /* centraliza a imagem */
+      background-repeat: no-repeat; /* não repete */
       color: white;
       padding: 12px;
-      text-align: center;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
+    header h1 { font-size: 1.4rem; margin: 0; }
+    header button { background: #708b72; border: none; padding: 8px 12px; border-radius: 6px; color: #fff; font-weight: bold; cursor: pointer; }
 
-    header h1 {
-      font-size: 1.4rem;
-      margin: 0;
-    }
-
-    header button {
-      background: #03f70f;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    /* GRID RESPONSIVO */
-    #produtos {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 15px;
-      padding: 15px;
-    }
-
-    .produto {
-      border: 1px solid #ccc;
+    /* Banners */
+    #baners {
+      position: relative;
+      max-width: 100%;
+      margin: 10px auto;
+      overflow: hidden;
       border-radius: 10px;
-      padding: 10px;
-      background: #fff;
-      text-align: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
+      height: 180px; /* importante: garante espaço para os slides */
+      background: #e9e9e9;
     }
 
-    .produto:hover {
-      transform: scale(1.02);
-    }
-
-    .produto img {
+    #baners .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      height: 160px;
+      height: 55%;
+      opacity: 0;
+      transition: opacity .6s ease;
+    }
+
+    #baners .slide.active {
+      opacity: 1;
+      z-index: 2;
+    }
+    #baners{background-color: #0057b300;}
+    #baners img {
+      width: 100%;
+      height: 180%;
       object-fit: cover;
-      border-radius: 8px;
+      display: block;
+      border-radius: 19px;
     }
 
-    .produto h3 {
-      margin: 8px 0 4px;
-      font-size: 1.2rem;
-    }
-
-    .produto p {
-      margin: 5px 0;
-      font-size: 0.95rem;
-    }
-
+    /* resto do layout (produtos, carrinho) */
+    #produtos { display: grid; grid-template-columns: 1fr; gap: 15px; padding: 15px; }
+    .produto { border: 1px solid #ccc; border-radius: 5px; padding: 5px; background: #fff; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: transform .2s; }
+    .produto:hover { transform: scale(1.02); }
+    .produto img { width: 50%; height: 100px; object-fit: cover; border-radius: 8px; }
+    .produto h3 { margin: 8px 0 4px; font-size: 1.2rem; }
+    .produto p { margin: 5px 0; font-size: .95rem; }
     button {
-      margin-top: 8px;
-      padding: 12px;
-      cursor: pointer;
-      width: 100%;
-      background: #28a745;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
+      text-shadow: #333 5px 5px 8px; margin-top: 8px; padding: 12px; cursor: pointer; width: 50%; background: #28a745; color: #fff; border: none; border-radius: 6px; font-size: 1rem; font-weight: bold; transition: .2s; }
+    button:hover { background: #218838; }
+    .btn-carrinho {
+      padding: 5px 8px;
+      font-size: 0.9rem;
+      background: transparent; /* fundo transparente */
+      border: none;            /* sem borda */
+      color: #333;             /* cor do texto/ícone */
       font-weight: bold;
-      transition: 0.2s;
+      cursor: pointer;
     }
 
-    button:hover {
-      background: #218838;
+    .btn-carrinho:hover {
+      color: #f6ff00; /* muda só a cor ao passar o mouse */
     }
 
-    /* ABA DE PRODUTOS E CARRINHO */
-    .aba {
-      display: none;
-    }
-    .ativa {
-      display: block;
-    }
+    .aba { display: none; }
+    .ativa { display: block; }
 
-    /* Carrinho */
-    #carrinhoLista {
-      list-style: none;
-      padding: 15px;
-    }
+    #carrinhoLista { list-style: none; padding: 15px; }
+    #carrinhoLista li { margin: 8px 0; display:flex; justify-content:space-between; align-items:center; font-size:.95rem; background:#fff; padding:8px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,.1); }
+    .btn-remover { background:#dc3545; padding:6px 10px; border:none; border-radius:5px; color:#fff; cursor:pointer; font-size:.85rem; }
 
-    #carrinhoLista li {
-      margin: 8px 0;
+    
+    #total { padding:15px; font-size:1.1rem; }
+    #finalizar { display:block; margin:15px auto; padding:12px; background:#00ff08; color:#fff; border:none; border-radius:6px; font-size:1rem; font-weight:bold; cursor:pointer; }
+    #finalizar:hover { background:#0056b3; }
+
+    @media (min-width:400px) {
+      #produtos { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+    #botoes {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.95rem;
-      background: #fff;
-      padding: 8px;
-      border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      justify-content: center;
+      gap: 10px;}
     }
 
-    .btn-remover {
-      background: #dc3545;
-      padding: 6px 10px;
-      border: none;
-      border-radius: 5px;
-      color: #fff;
-      cursor: pointer;
-      font-size: 0.85rem;
-    }
-
-    #total {
-      padding: 15px;
-      font-size: 1.1rem;
-    }
-
-    #finalizar {
-      display: block;
-      margin: 15px auto;
-      padding: 12px;
-      background: #00ff08;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    #finalizar:hover {
-      background: #0056b3;
-    }
-
-    /* Melhorar no desktop */
-    @media (min-width: 400px) {
-      #produtos {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      }
-    }
+   
   </style>
 </head>
 <body>
   <header>
-    <h1>🍔 delivery </h1>
-    <button onclick="mostrarAba('carrinho')">🛒 Carrinho (<span id="qtd">0</span>)</button>
+    <img src="imgs/logo.png" alt="logo" style="width:54px; height:54px; padding:1px; border: none;">
+
+    <h1 id="titulo-aba">Sabor Caseiro</h1>
+    <button class="btn-carrinho" onclick="mostrarAba('carrinho')">
+  🛒(<span id="qtd">0</span>)
+</button>
+
   </header>
 
-  <!-- Aba de Produtos -->
-  <div id="aba-produtos" class="aba ativa">
-    <div id="produtos"></div>
+  <!-- Banners -->
+  <div id="baners">
+    <div class="slide">
+      <img src="https://marketplace.canva.com/EAFmYdJMPMo/2/0/800w/canva-banner-paisagem-hamburgueria-moderno-preto-vermelho-e-branco-4bGTVDv-6aY.jpg" alt="Banner 1">
+    </div>
+    <div class="slide">
+      <img src="https://img.freepik.com/psd-gratuitas/modelo-de-capa-de-facebook-delicioso-menu-de-hamburguer-e-comida_106176-2198.jpg?semt=ais_hybrid&w=740" alt="Banner 2">
+    </div>
   </div>
 
+  <!-- Aba de Produtos -->
+  <div id="catalogo" class="aba ativa">
+    <div style="text-align:center; margin:10px 0;" id="botoes">
+      <button onclick="mostrarAba_s('aba-bebidas')">bebidas</button>
+      <button onclick="mostrarAba_s('aba-comidas')">comidas</button>
+    </div>
+
+    <div id="aba-comidas" class="aba ativa">
+      <h3>🍟 comidas</h3>
+      <div id="produtos" class="comidas"></div>
+    </div>
+    </div>
+
+    <div id ="aba-bebidas" class="aba ativa"style="display:none;"> >
+      <h3>🥃 bebidas</h3>
+      <div id="produtos"  class="bebidas"></div>
+    </div>
+  </div>
   <!-- Aba do Carrinho -->
   <div id="aba-carrinho" class="aba">
-    <h2 style="text-align:center; margin: 15px 0;">🛒 Seu Carrinho</h2>
+    <h2 style="text-align:center; margin:15px 0;">🛒</h2>
     <ul id="carrinhoLista"></ul>
     <p id="total"><strong>Total: R$ 0,00</strong></p>
     <button id="finalizar" onclick="finalizarCompra()">Finalizar Compra</button>
@@ -180,95 +164,146 @@
   </div>
 
   <script>
+    // --- carrinho / produtos (mesma lógica sua) ---
     let carrinho = [];
 
     async function carregarProdutos() {
-      const resposta = await fetch("cardapio.json");
-      const produtos = await resposta.json();
+      try {
+        const resposta = await fetch("cardapio.json");
+        if (!resposta.ok) throw new Error("cardapio.json não encontrado (status " + resposta.status + ")");
+        const produtos = await resposta.json();
+        const container_comidas = document.getElementsByClassName("comidas")[0];
+        const container_bebidas = document.getElementsByClassName("bebidas")[0];
+        const comidas = produtos.comidas; // Ajuste aqui para acessar o array correto
+        const bebidas = produtos.bebidas; // Ajuste aqui para acessar o array correto
+        
+        comidas.forEach(comida => {
+          const div = document.createElement("div");
+          div.className = "produto";
 
-      const container = document.getElementById("produtos");
-      produtos.forEach(produto => {
-        const div = document.createElement("div");
-        div.className = "produto";
-        div.innerHTML = `
-          <img src="${produto.url}" alt="${produto.nome}">
-          <h3>${produto.nome}</h3>
-          <p>${produto.descricao}</p>
-          <p><strong>R$ ${produto.preco.toFixed(2)}</strong></p>
-          <button onclick="adicionarCarrinho(${produto.id}, '${produto.nome}', ${produto.preco})">Comprar</button>
-        `;
-        container.appendChild(div);
-      });
+          // monta o botão dependendo da disponibilidade
+          const botao = comida.disponivel 
+            ? `<button onclick="adicionarCarrinho(${comida.id}, '${comida.nome.replace(/'/g,"\\'")}', ${comida.preco})">Comprar</button>`
+            : `<button disabled style="background:#ccc; cursor:not-allowed;">Indisponível</button>`;
+
+          div.innerHTML = `
+            <img src="${comida.url}" alt="${comida.nome}">
+            <h3>${comida.nome}</h3>
+            <p>${comida.descricao}</p>
+            <p style="font-weight:bold; color:${comida.disponivel ? 'rgb(49,128,0)' : 'red'};">
+              Disponível: ${comida.disponivel ? 'Sim' : 'Não'}
+            </p>
+            <p><strong>R$ ${comida.preco.toFixed(2)}</strong></p>
+            ${botao}
+          `;
+          
+          container_comidas.appendChild(div);
+        });
+        
+        bebidas.forEach(bebida=> {
+          const div = document.createElement("div");
+          div.className = "produto";
+
+          // monta o botão dependendo da disponibilidade
+          const botao = bebida.disponivel 
+            ? `<button onclick="adicionarCarrinho(${bebida.id}, '${bebida.nome.replace(/'/g,"\\'")}', ${bebida.preco})">Comprar</button>`
+            : `<button disabled style="background:#ccc; cursor:not-allowed;">Indisponível</button>`;
+
+          div.innerHTML = `
+            <img src="${bebida.url}" alt="${bebida.nome}">
+            <h3>${bebida.nome}</h3>
+            <p>${bebida.descricao}</p>
+            <p style="font-weight:bold; color:${bebida.disponivel ? 'rgb(49,128,0)' : 'red'};">
+              Disponível: ${bebida.disponivel ? 'Sim' : 'Não'}
+            </p>
+            <p><strong>R$ ${bebida.preco.toFixed(2)}</strong></p>
+            ${botao}
+          `;
+          
+          container_bebidas.appendChild(div);
+        });
+      } catch (err) {
+        console.error("Erro ao carregar produtos:", err);
+        // opcional: mostrar mensagem ao usuário
+      }
     }
 
-    function adicionarCarrinho(id, nome, preco) {
-      carrinho.push({ id, nome, preco });
-      atualizarCarrinho();
-    }
-
-    function removerCarrinho(index) {
-      carrinho.splice(index, 1);
-      atualizarCarrinho();
-    }
-
+    function adicionarCarrinho(id, nome, preco) { carrinho.push({ id, nome, preco }); atualizarCarrinho(); }
+    function removerCarrinho(index) { carrinho.splice(index, 1); atualizarCarrinho(); }
     function atualizarCarrinho() {
       const lista = document.getElementById("carrinhoLista");
       const total = document.getElementById("total");
       const qtd = document.getElementById("qtd");
-
       lista.innerHTML = "";
       let soma = 0;
-
       carrinho.forEach((item, index) => {
         soma += item.preco;
         const li = document.createElement("li");
-        li.innerHTML = `
-          ${item.nome} - R$ ${item.preco.toFixed(2)} 
-          <button class="btn-remover" onclick="removerCarrinho(${index})">Remover</button>`;
+        li.innerHTML = `${item.nome} - R$ ${item.preco.toFixed(2)} <button class="btn-remover" onclick="removerCarrinho(${index})">Remover</button>`;
         lista.appendChild(li);
       });
-
       total.innerHTML = `<strong>Total: R$ ${soma.toFixed(2)}</strong>`;
       qtd.innerText = carrinho.length;
     }
 
     function finalizarCompra() {
-    if (carrinho.length === 0) {
-        alert("Seu carrinho está vazio!");
-        return;
+      if (carrinho.length === 0) { alert("Seu carrinho está vazio!"); return; }
+      let resumo = "🛒 *Meu pedido do Cardápio Delivery:*\n\n";
+      let soma = 0;
+      carrinho.forEach(item => { resumo += `- ${item.nome} (R$ ${item.preco.toFixed(2)})\n`; soma += item.preco; });
+      resumo += `\n* Total: R$ ${soma.toFixed(2)} + taxa de entrega:R$ 5*`;
+      const numeroWhats = "558694983369";
+      const link = `https://wa.me/${numeroWhats}?text=${encodeURIComponent(resumo)}`;
+      window.open(link, "_blank");
     }
 
-    let resumo = "🛒 *Meu pedido do Cardápio Delivery:*\n\n";
-    let soma = 0;
-
-    carrinho.forEach(item => {
-        resumo += `- ${item.nome} (R$ ${item.preco.toFixed(2)})\n`;
-        soma += item.preco;
-    });
-
-    resumo += `\n*Total: R$ ${soma.toFixed(2)}*`;
-
-    // Número do WhatsApp da lanchonete (inclua o DDD, sem + ou 00)
-    const numeroWhats = "558694983369"; // Ex: 55 + DDD + número
-
-    // Cria link com a mensagem
-    const link = `https://wa.me/${numeroWhats}?text=${encodeURIComponent(resumo)}`;
-
-    // Abre WhatsApp
-    window.open(link, "_blank");
-    }
     function mostrarAba(aba) {
-      document.getElementById("aba-produtos").classList.remove("ativa");
+      document.getElementById("catalogo").classList.remove("ativa");
       document.getElementById("aba-carrinho").classList.remove("ativa");
+      if (aba === "produtos") document.getElementById("catalogo").classList.add("ativa");
+      else document.getElementById("aba-carrinho").classList.add("ativa");
+    }
+    function mostrarAba_s(aba) {
+      const comidas = document.getElementById('aba-comidas');
+      const bebidas = document.getElementById('aba-bebidas');
 
-      if (aba === "produtos") {
-        document.getElementById("aba-produtos").classList.add("ativa");
-      } else {
-        document.getElementById("aba-carrinho").classList.add("ativa");
+      if (aba === 'aba-comidas') {
+        comidas.style.display = 'block';   // mostra comidas
+        bebidas.style.display = 'none';    // esconde bebidas
+      } else if (aba === 'aba-bebidas') {
+        comidas.style.display = 'none';    // esconde comidas
+        bebidas.style.display = 'block';   // mostra bebidas
       }
     }
 
-    carregarProdutos();
+    // --- slideshow dos banners (inicia após DOM pronto) ---
+    document.addEventListener("DOMContentLoaded", () => {
+      // Mostra o primeiro slide
+      const slides = document.querySelectorAll("#baners .slide");
+      if (!slides.length) {
+        console.warn("Nenhum slide encontrado em #baners");
+      } else {
+        let current = 0;
+        slides.forEach((s, i) => s.classList.toggle("active", i === 0));
+        setInterval(() => {
+          slides[current].classList.remove("active");
+          current = (current + 1) % slides.length;
+          slides[current].classList.add("active");
+        }, 3000);
+      }
+
+      // carregar produtos (não bloqueia o slideshow)
+      carregarProdutos();
+    });
+
+  if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    // Se não for celular, bloqueia o acesso
+    //document.body.innerHTML = "<h2>Este site só pode ser acessado por dispositivos móveis.</h2>";
+    // Ou redirecionar para outra página:
+    // window.location.href = "https://exemplo.com/acesso-negado";
+  }
+</script>
+
   </script>
 </body>
 </html>
