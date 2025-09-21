@@ -25,7 +25,7 @@
       "url": "https://speedzapp.com/userfiles/sp-us/imagens/estabelecimentos/64/produtos/5HD459WRY4FG.jpg"
     },
     {
-      "disponivel": false,
+      "disponivel": true,
       "id": 4,
       "nome": "Bomba Salgado",
       "descricao": "recheio de queijo e presunto",
