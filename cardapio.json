@@ -17,7 +17,7 @@
       "url": "https://instadelivery-public.nyc3.cdn.digitaloceanspaces.com/itens/164955274162522d65643b1_75_75.jpeg"
     },
     {
-      "disponivel": true,
+      "disponivel": false,
       "id": 3,
       "nome": "Batata Frita",
       "descricao": "Porção média de batata frita crocante,acompanha copo de ketchup",
