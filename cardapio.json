@@ -9,7 +9,7 @@
       "url": "https://viagem.cnnbrasil.com.br/wp-content/uploads/sites/5/2022/05/origem-do-hambuguer-cnn4.jpg"
     },
     {
-      "disponivel": true,
+      "disponivel": false,
       "id": 2,
       "nome": "Hot Dog",
       "descricao": "salcicha, pão, molho e batata palha",
