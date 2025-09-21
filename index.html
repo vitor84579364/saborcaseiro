@@ -174,13 +174,17 @@
       margin: 0 5px;
       font-size: 0.85rem;
     }
-
+    strong {
+      color: #ffffff;
+      font-size: 0.9rem;
+    }
     .produto button {
       margin-left: auto;
       width: auto;
       padding: 6px 10px;
       font-size: 0.8rem;
     }
+    
   }
 </style>
 
@@ -372,6 +376,32 @@
     // Ou redirecionar para outra página:
     // window.location.href = "https://exemplo.com/acesso-negado";
   }
+  const cartButton = document.querySelector(".btn-carrinho");
+
+  let isDragging = false;
+  let offsetX, offsetY;
+
+  cartButton.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    offsetX = e.clientX - cartButton.getBoundingClientRect().left;
+    offsetY = e.clientY - cartButton.getBoundingClientRect().top;
+    cartButton.style.transition = "none"; // remove suavidade enquanto arrasta
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (isDragging) {
+      cartButton.style.left = `${e.clientX - offsetX}px`;
+      cartButton.style.top = `${e.clientY - offsetY}px`;
+      cartButton.style.right = "auto";
+      cartButton.style.bottom = "auto";
+      cartButton.style.position = "fixed";
+    }
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDragging = false;
+    cartButton.style.transition = "0.2s ease"; // volta suavidade
+  });
 </script>
 
   </script>
