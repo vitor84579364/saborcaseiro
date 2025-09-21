@@ -40,6 +40,15 @@
       "url": "https://viagem.cnnbrasil.com.br/wp-content/uploads/sites/5/2022/05/coxinha-cremosa-de-frango-c-catupiry_bar-veloso_foto-leo-feltran_0014.jpg",
       "disponivel": true,
       "id": 5
+    },
+    {
+      "tipo": "comidas",
+      "nome": "pastel",
+      "descricao": "sabor de carne",
+      "preco": 9,
+      "url": "https://img.cdndsgni.com/preview/11529378.jpg",
+      "disponivel": true,
+      "id": 6
     }
   ],
   "bebidas": [
